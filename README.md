@@ -45,3 +45,13 @@ Removed values from full DataFrame: 3427, Percent: 4.1%
   height="600"
   frameborder="0"
 ></iframe>
+
+DataFrame Example including 'name', 'minutes', 'rating', and 'calories'
+| name                                 |   minutes |   rating |   calories |
+|:-------------------------------------|----------:|---------:|-----------:|
+| 1 brownies in the world    best ever |        40 |        4 |      138.4 |
+| 1 in canada chocolate chip cookies   |        45 |        5 |      595.1 |
+| 412 broccoli casserole               |        40 |        5 |      194.8 |
+| 412 broccoli casserole               |        40 |        5 |      194.8 |
+| 412 broccoli casserole               |        40 |        5 |      194.8 |
+
