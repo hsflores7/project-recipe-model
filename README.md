@@ -4,7 +4,7 @@
 > This is a project from the course DSC 80 at UC San Diego during the Fall 2024 quarter.
 
 ## Minute Graph
-Here is the code that created the graph
+Here is the code that created the graph. This graph was purely for learning more about the data.
 ```py
 def graph_without_outliers(col, cap, sample_size=10000):
     under_cap = unique_recipes_df[unique_recipes_df[col] < cap]
@@ -30,7 +30,7 @@ def graph_without_outliers(col, cap, sample_size=10000):
     fig.show()
     return fig
 
-    fig = graph_without_outliers('minutes', 300)
+fig = graph_without_outliers('minutes', 300)
 ```
 Depicted is a histogram of all the recipes that take less than $300$ minutes in order to gain a graph that is more readable and usable for humans. Included are some statistics about the dataset and graph.
 
@@ -47,6 +47,7 @@ Removed values from full DataFrame: 3427, Percent: 4.1%
 ></iframe>
 
 DataFrame Example including 'name', 'minutes', 'rating', and 'calories'
+
 | name                                 |   minutes |   rating |   calories |
 |:-------------------------------------|----------:|---------:|-----------:|
 | 1 brownies in the world    best ever |        40 |        4 |      138.4 |
