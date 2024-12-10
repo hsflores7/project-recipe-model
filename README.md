@@ -3,7 +3,7 @@
 
 > This is a project from the course DSC 80 at UC San Diego during the Fall 2024 quarter.
 
-## Minute Graph
+<!-- ## Minute Graph
 Here is the code that created the graph. This graph was purely for learning more about the data.
 ```py
 def graph_without_outliers(col, cap, sample_size=10000):
@@ -40,6 +40,32 @@ fig = graph_without_outliers('minutes', 300)
 ```
 Depicted is a histogram of all the recipes that take less than $300$ minutes in order to gain a graph that is more readable and usable for humans. Included are some statistics about the dataset and graph.
 
+
+
+DataFrame Example including 'name', 'minutes', 'rating', and 'calories'
+
+| name                                 |   minutes |   rating |   calories |
+|:-------------------------------------|----------:|---------:|-----------:|
+| 1 brownies in the world    best ever |        40 |        4 |      138.4 |
+| 1 in canada chocolate chip cookies   |        45 |        5 |      595.1 |
+| 412 broccoli casserole               |        40 |        5 |      194.8 |
+| 412 broccoli casserole               |        40 |        5 |      194.8 |
+| 412 broccoli casserole               |        40 |        5 |      194.8 | -->
+
+## Introduction
+
+# Data Explortation
+## Data Cleaning
+
+## Univariate Analysis
+### Minute Graph
+This graph removes the outliers to imporve readabliltiy of the distrubution as 
+as before removing such outliers it's very hard to read.
+
+Below is a print statement from the graph function including the means and medians of both 
+the original distrubtion and the distrubution without the outliers. Of note, 
+the medians are the same and the final line inclues how many values were removed from the 
+original dataset in the making of the graph.
 ```
 Mean of recipes under 300 minutes: 47.31, Mean of all recipes: 115.1
 Median of recipes under 300 minutes: 35.0, Median of all recipes: 35.0
@@ -52,13 +78,21 @@ Removed values from full DataFrame: 3427, Percent: 4.1%
   frameborder="0"
 ></iframe>
 
-DataFrame Example including 'name', 'minutes', 'rating', and 'calories'
+## Bivariate Analysis
 
-| name                                 |   minutes |   rating |   calories |
-|:-------------------------------------|----------:|---------:|-----------:|
-| 1 brownies in the world    best ever |        40 |        4 |      138.4 |
-| 1 in canada chocolate chip cookies   |        45 |        5 |      595.1 |
-| 412 broccoli casserole               |        40 |        5 |      194.8 |
-| 412 broccoli casserole               |        40 |        5 |      194.8 |
-| 412 broccoli casserole               |        40 |        5 |      194.8 |
+## Interesting Aggregates
 
+## NMAR Analysis
+
+## Missingness Dependency
+
+## Hypothesis Testing
+
+# Model Creation
+## Problem Identification
+
+## Baseline Model
+
+## Final Model
+
+## Fairness Analysis
