@@ -18,14 +18,20 @@ def graph_without_outliers(col, cap, sample_size=10000):
     removed_value_count = unique_recipes_df.shape[0] - under_cap.shape[0]
     percent_removed = removed_value_count / unique_recipes_df.shape[0] * 100
     
-    print(f'Mean of recipes under {cap} {col}: {round(under_mean, 2)}, Mean of all recipes: {round(full_mean, 2)}')
-    print(f'Median of recipes under {cap} {col}: {round(under_median, 2)}, Median of all recipes: {round(full_median, 2)}')
-    print(f'Removed values from full DataFrame: {removed_value_count}, Percent: {round(percent_removed, 2)}%')
+    print(f'Mean of recipes under {cap} {col}: {round(under_mean, 2)},
+        Mean of all recipes: {round(full_mean, 2)}')
+    print(f'Median of recipes under {cap} {col}: {round(under_median, 2)},
+        Median of all recipes: {round(full_median, 2)}')
+    print(f'Removed values from full DataFrame: {removed_value_count},
+        Percent: {round(percent_removed, 2)}%')
     
     fig = px.histogram(under_cap.sample(sample_size), x=col)
     
-    fig.add_trace(go.Scatter(x=[under_mean, under_mean], y=[0, sample_size/10], mode='lines', name='Under Cap Mean', line=dict(color='red', dash='dash')))
-    fig.add_trace(go.Scatter(x=[full_mean, full_mean], y=[0, sample_size/10], mode='lines', name='Full Mean', line=dict(color='orange', dash='dash')))
+    fig.add_trace(go.Scatter(x=[under_mean, under_mean],
+        y=[0, sample_size/10], mode='lines', name='Under Cap Mean',
+        line=dict(color='red', dash='dash')))
+    fig.add_trace(go.Scatter(x=[full_mean, full_mean], y=[0, sample_size/10],
+        mode='lines', name='Full Mean', line=dict(color='orange', dash='dash')))
     
     fig.show()
     return fig
