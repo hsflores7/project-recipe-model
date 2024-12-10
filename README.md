@@ -52,13 +52,43 @@ DataFrame Example including 'name', 'minutes', 'rating', and 'calories'
 | 412 broccoli casserole               |        40 |        5 |      194.8 |
 | 412 broccoli casserole               |        40 |        5 |      194.8 | -->
 
-## Introduction
+### Introduction
 
-# Data Explortation
-## Data Cleaning
 
-## Univariate Analysis
-### Minute Graph
+## Data Explortation
+### Data Cleaning
+
+```
+# Merge 
+columns_to_keep = ['name', 'id', 'minutes', 'contributor_id', 'submitted', 'tags',
+       'nutrition', 'n_steps', 'steps', 'description', 'ingredients',
+       'n_ingredients', 'date', 'rating']
+recipes_reviews = pd.merge(recipes, reviews, left_on='id', right_on='recipe_id', how='left')[columns_to_keep]
+recipes_reviews = recipes_reviews.replace(0, np.nan)
+avg_ratings = recipes_reviews.groupby('id')['rating'].mean()
+avg_ratings.name = 'avg_rating'
+df = pd.merge(recipes_reviews, avg_ratings, on='id', how='left')
+df.head()
+
+# Adding the new columns from Nutrition
+new_column_names = ['calories', 'total fat', 'sugar', 'sodium',
+            'protein', 'saturated fat', 'carbohydrates']
+values = df['nutrition']
+value_list = [json.loads(value) for value in values]
+# df.assign(**{name: value for name, value in zip(new_column_names, value_list)})
+for i, column_name in enumerate(new_column_names):
+    df[column_name] = [row[i] for row in value_list]
+
+df = df[['name', 'id', 'minutes', 'contributor_id', 'submitted', 'tags', 'n_steps', 
+    'steps', 'description', 'ingredients', 'n_ingredients', 'date', 'rating', 
+    'avg_rating', 'calories', 'total fat', 'sugar', 
+    'sodium', 'protein', 'saturated fat', 'carbohydrates']]
+
+unique_recipes_df = df.drop_duplicates(subset=['name'])
+```
+
+### Univariate Analysis
+#### Minute Graph
 This graph removes the outliers to imporve readabliltiy of the distrubution as 
 as before removing such outliers it's very hard to read.
 
@@ -78,21 +108,29 @@ Removed values from full DataFrame: 3427, Percent: 4.1%
   frameborder="0"
 ></iframe>
 
-## Bivariate Analysis
+### Bivariate Analysis
+Scatter plot depicting all the average rating vs the sugar content of each unique 
+recipe. There is quite a bit more 4 to 5 star rated recipes over lower ratings.
+<iframe
+  src="assets/scatter-rating-sugar-graph.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
-## Interesting Aggregates
+### Interesting Aggregates
 
-## NMAR Analysis
+### NMAR Analysis
 
-## Missingness Dependency
+### Missingness Dependency
 
-## Hypothesis Testing
+### Hypothesis Testing
 
-# Model Creation
-## Problem Identification
+## Model Creation
+### Problem Identification
 
-## Baseline Model
+### Baseline Model
 
-## Final Model
+### Final Model
 
-## Fairness Analysis
+### Fairness Analysis
