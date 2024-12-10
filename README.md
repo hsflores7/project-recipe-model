@@ -57,8 +57,8 @@ DataFrame Example including 'name', 'minutes', 'rating', and 'calories'
 
 ## Data Explortation
 ### Data Cleaning
-
-```
+Here is the code used for data cleaning:
+```py
 # Merge 
 columns_to_keep = ['name', 'id', 'minutes', 'contributor_id', 'submitted', 'tags',
        'nutrition', 'n_steps', 'steps', 'description', 'ingredients',
@@ -68,7 +68,6 @@ recipes_reviews = recipes_reviews.replace(0, np.nan)
 avg_ratings = recipes_reviews.groupby('id')['rating'].mean()
 avg_ratings.name = 'avg_rating'
 df = pd.merge(recipes_reviews, avg_ratings, on='id', how='left')
-df.head()
 
 # Adding the new columns from Nutrition
 new_column_names = ['calories', 'total fat', 'sugar', 'sodium',
@@ -86,6 +85,12 @@ df = df[['name', 'id', 'minutes', 'contributor_id', 'submitted', 'tags', 'n_step
 
 unique_recipes_df = df.drop_duplicates(subset=['name'])
 ```
+#### Steps
+1. Mergeing both sets of data
+2. Creating the `avg_rating` column
+3. Pulling the data out of the 'nutrition' column into thier own columns
+4. Keeping only possibly relevent columns in the final DataFrame, and creating 
+and additional df that only contains the unique recipes
 
 ### Univariate Analysis
 #### Minute Graph
