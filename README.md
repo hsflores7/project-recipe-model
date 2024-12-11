@@ -122,7 +122,7 @@ their review to speak for itself rather than attach a number value to it.
 Based on the permutation test the distribution of Sugar is different when rating is missing.
 The only one I found that was not affected was the number of minutes.
 <iframe
-  src="assets/permutation-missing-sugar-graph.html"
+  src="assets/permutation-missing_rating-sugar-graph.html"
   width="800"
   height="600"
   frameborder="0"
