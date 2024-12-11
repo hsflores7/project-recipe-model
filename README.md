@@ -52,14 +52,14 @@ DataFrame Example including 'name', 'minutes', 'rating', and 'calories'
 | 412 broccoli casserole               |        40 |        5 |      194.8 |
 | 412 broccoli casserole               |        40 |        5 |      194.8 | -->
 
-### Introduction
+## Introduction
 
 
-## Data Explortation
+## Data Cleaning and Exploratory Data Analysis
 ### Data Cleaning
 Here is the code used for data cleaning:
 ```py
-# Merge 
+# Merge
 columns_to_keep = ['name', 'id', 'minutes', 'contributor_id', 'submitted', 'tags',
        'nutrition', 'n_steps', 'steps', 'description', 'ingredients',
        'n_ingredients', 'date', 'rating']
@@ -74,7 +74,7 @@ new_column_names = ['calories', 'total fat', 'sugar', 'sodium',
             'protein', 'saturated fat', 'carbohydrates']
 values = df['nutrition']
 value_list = [json.loads(value) for value in values]
-# df.assign(**{name: value for name, value in zip(new_column_names, value_list)})
+
 for i, column_name in enumerate(new_column_names):
     df[column_name] = [row[i] for row in value_list]
 
@@ -90,7 +90,7 @@ unique_recipes_df = df.drop_duplicates(subset=['name'])
 2. Creating the `avg_rating` column
 3. Pulling the data out of the 'nutrition' column into thier own columns
 4. Keeping only possibly relevent columns in the final DataFrame, and creating 
-and additional df that only contains the unique recipes
+and additional DataFrame that only contains the unique recipes
 
 ### Univariate Analysis
 #### Minute Graph
@@ -107,7 +107,24 @@ Median of recipes under 300 minutes: 35.0, Median of all recipes: 35.0
 Removed values from full DataFrame: 3427, Percent: 4.1%
 ```
 <iframe
-  src="assets/test-graph.html"
+  src="assets/minute-graph.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
+Histogram of the ratings within the data. Very skewed towards 5 star ratings. 
+<iframe
+  src="assets/hist-ratings-graph.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+Here is the graphed difference between the 5 Star reviews and the non 5 star reviews
+<iframe
+  src="assets/hist-five-star-graph.html"
   width="800"
   height="600"
   frameborder="0"
@@ -124,18 +141,42 @@ recipe. There is quite a bit more 4 to 5 star rated recipes over lower ratings.
 ></iframe>
 
 ### Interesting Aggregates
+Pivot Table by the rating and the mean and median sugar content.
+|   rating |   ('mean', 'sugar') |   ('median', 'sugar') |
+|---------:|--------------------:|----------------------:|
+|        1 |             88.0094 |                    28 |
+|        2 |             75.1664 |                    25 |
+|        3 |             65.552  |                    23 |
+|        4 |             56.7858 |                    21 |
+|        5 |             63.0816 |                    22 |
 
+## Assessment of Missingness
 ### NMAR Analysis
+
 
 ### Missingness Dependency
 
-### Hypothesis Testing
 
-## Model Creation
-### Problem Identification
+## Hypothesis Testing
+**Question**: Does sugar play a role in a rating being highly rated?
+- **Null Hypothesis**: The differences between the means of highly rated recipes (5-star) 
+and the difference between the means of the low rated recipes (1-4 stars) is Zero
+- **Alternative Hypothesis**: The differences between the means of of highly rated recipes (5-star) 
+and the difference between the means of the low rated recipes (1-4 stars) is *not* Zero
+<iframe
+  src="assets/permutation-sugar-graph.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
-### Baseline Model
+## Framing a Prediction Problem
+The remainer of this report will focus on creating a couple models in order to 
+predict the ratings of the recipes. This will be done using a handful of different 
+features
 
-### Final Model
+## Baseline Model
 
-### Fairness Analysis
+## Final Model
+
+## Fairness Analysis
