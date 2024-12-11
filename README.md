@@ -86,20 +86,20 @@ df = df[['name', 'id', 'minutes', 'contributor_id', 'submitted', 'tags', 'n_step
 unique_recipes_df = df.drop_duplicates(subset=['name'])
 ```
 #### Steps
-1. Mergeing both sets of data
+1. Merging both sets of data
 2. Creating the `avg_rating` column
-3. Pulling the data out of the 'nutrition' column into thier own columns
-4. Keeping only possibly relevent columns in the final DataFrame, and creating 
+3. Pulling the data out of the 'nutrition' column into their own columns
+4. Keeping only possibly relevant columns in the final DataFrame, and creating 
 and additional DataFrame that only contains the unique recipes
 
 ### Univariate Analysis
 #### Minute Graph
-This graph removes the outliers to imporve readabliltiy of the distrubution as 
+This graph removes the outliers to improve readability of the distribution as 
 as before removing such outliers it's very hard to read.
 
 Below is a print statement from the graph function including the means and medians of both 
-the original distrubtion and the distrubution without the outliers. Of note, 
-the medians are the same and the final line inclues how many values were removed from the 
+the original distribution and the distribution without the outliers. Of note, 
+the medians are the same and the final line includes how many values were removed from the 
 original dataset in the making of the graph.
 ```
 Mean of recipes under 300 minutes: 47.31, Mean of all recipes: 115.1
@@ -142,6 +142,7 @@ recipe. There is quite a bit more 4 to 5 star rated recipes over lower ratings.
 
 ### Interesting Aggregates
 Pivot Table by the rating and the mean and median sugar content.
+
 |   rating |   ('mean', 'sugar') |   ('median', 'sugar') |
 |---------:|--------------------:|----------------------:|
 |        1 |             88.0094 |                    28 |
@@ -158,7 +159,7 @@ Pivot Table by the rating and the mean and median sugar content.
 
 
 ## Hypothesis Testing
-**Question**: Does sugar play a role in a rating being highly rated?
+**Question**: Does sugar play a role in a recipe being highly rated?
 - **Null Hypothesis**: The differences between the means of highly rated recipes (5-star) 
 and the difference between the means of the low rated recipes (1-4 stars) is Zero
 - **Alternative Hypothesis**: The differences between the means of of highly rated recipes (5-star) 
@@ -171,11 +172,43 @@ and the difference between the means of the low rated recipes (1-4 stars) is *no
 ></iframe>
 
 ## Framing a Prediction Problem
-The remainer of this report will focus on creating a couple models in order to 
+The remained of this report will focus on creating a couple models in order to 
 predict the ratings of the recipes. This will be done using a handful of different 
-features
+features including: sugar content, protein content, 
+
+When first making a Model I when with a Regression, however after working on that
+when deciding how to improve it I switched to a Classifier question determining 
+if it would get a 5 star review or not.
 
 ## Baseline Model
+To start I've created a very basic Linear Regression that inclues two features:
+- Sugar
+- Protein
+These two have been chooses because they both tell information about the content 
+of the dish of the recipe, particularly when considering the "healthiness" of the 
+dish. Here is a graph depicting the 3D graph of what it will be predicting.
+<iframe
+  src="assets/lr-sugar-protein-graph.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+As seen in this graph the Rating axis only changes very slowly which makes sense
+when we look at the coefficients and intercept
+```py
+lr.intercept_, lr.coef_
+```
+```
+(np.float64(4.630782134560361), array([ 6.84636526e-06, -1.18750729e-04]))
+```
+Our coefficients are incredibly small, hence why the predicted ratings are minimally
+changed by each feature.
+
+Additionally, the intercept is the same as the mean! Which means that essentially,
+this linear regression model is a contant model with a tiny bit of varition and 
+breaks if you give it huge numbers, as the predicted values would then not be
+within the expected 1 to 5 range expected when rating a recipe.
 
 ## Final Model
 
