@@ -3,57 +3,12 @@
 
 > This is a project from the course DSC 80 at UC San Diego during the Fall 2024 quarter.
 
-<!-- ## Minute Graph
-Here is the code that created the graph. This graph was purely for learning more about the data.
-```py
-def graph_without_outliers(col, cap, sample_size=10000):
-    under_cap = unique_recipes_df[unique_recipes_df[col] < cap]
-
-    under_mean = under_cap[col].mean()
-    full_mean = unique_recipes_df[col].mean()
-    
-    under_median = under_cap[col].median()
-    full_median = unique_recipes_df[col].median()
-    
-    removed_value_count = unique_recipes_df.shape[0] - under_cap.shape[0]
-    percent_removed = removed_value_count / unique_recipes_df.shape[0] * 100
-    
-    print(f'Mean of recipes under {cap} {col}: {round(under_mean, 2)},
-        Mean of all recipes: {round(full_mean, 2)}')
-    print(f'Median of recipes under {cap} {col}: {round(under_median, 2)},
-        Median of all recipes: {round(full_median, 2)}')
-    print(f'Removed values from full DataFrame: {removed_value_count},
-        Percent: {round(percent_removed, 2)}%')
-    
-    fig = px.histogram(under_cap.sample(sample_size), x=col)
-    
-    fig.add_trace(go.Scatter(x=[under_mean, under_mean],
-        y=[0, sample_size/10], mode='lines', name='Under Cap Mean',
-        line=dict(color='red', dash='dash')))
-    fig.add_trace(go.Scatter(x=[full_mean, full_mean], y=[0, sample_size/10],
-        mode='lines', name='Full Mean', line=dict(color='orange', dash='dash')))
-    
-    fig.show()
-    return fig
-
-fig = graph_without_outliers('minutes', 300)
-```
-Depicted is a histogram of all the recipes that take less than $300$ minutes in order to gain a graph that is more readable and usable for humans. Included are some statistics about the dataset and graph.
-
-
-
-DataFrame Example including 'name', 'minutes', 'rating', and 'calories'
-
-| name                                 |   minutes |   rating |   calories |
-|:-------------------------------------|----------:|---------:|-----------:|
-| 1 brownies in the world    best ever |        40 |        4 |      138.4 |
-| 1 in canada chocolate chip cookies   |        45 |        5 |      595.1 |
-| 412 broccoli casserole               |        40 |        5 |      194.8 |
-| 412 broccoli casserole               |        40 |        5 |      194.8 |
-| 412 broccoli casserole               |        40 |        5 |      194.8 | -->
-
 ## Introduction
-
+Sugar, a very potent factor in a food. Often sugar can be a big factor that determines
+if one may like or dislike any given meal. Sometimes it's too sweet, sometimes not
+sweet enough. And it all depends on the individual person as well. So the quetion
+is are their trends, or predictable trends when it comes sugar content and general
+enjoyment of food. Here we will explore this with a handful of different ways!
 
 ## Data Cleaning and Exploratory Data Analysis
 ### Data Cleaning
@@ -93,21 +48,21 @@ unique_recipes_df = df.drop_duplicates(subset=['name'])
 and additional DataFrame that only contains the unique recipes
 
 ### Univariate Analysis
-#### Minute Graph
+#### Sugar Distribution
 This graph removes the outliers to improve readability of the distribution as 
 as before removing such outliers it's very hard to read.
 
 Below is a print statement from the graph function including the means and medians of both 
 the original distribution and the distribution without the outliers. Of note, 
-the medians are the same and the final line includes how many values were removed from the 
+the medians are about the same and the final line includes how many values were removed from the 
 original dataset in the making of the graph.
 ```
-Mean of recipes under 300 minutes: 47.31, Mean of all recipes: 115.1
-Median of recipes under 300 minutes: 35.0, Median of all recipes: 35.0
-Removed values from full DataFrame: 3427, Percent: 4.1%
+Mean of recipes under 300 sugar: 43.05, Mean of all recipes: 68.7
+Median of recipes under 300 sugar: 22.0, Median of all recipes: 23.0
+Removed values from full DataFrame: 2709, Percent: 3.24%
 ```
 <iframe
-  src="assets/minute-graph.html"
+  src="assets/sugar-graph.html"
   width="800"
   height="600"
   frameborder="0"
@@ -160,9 +115,9 @@ Pivot Table by the rating and the mean and median sugar content.
 
 ## Hypothesis Testing
 **Question**: Does sugar play a role in a recipe being highly rated?
-- **Null Hypothesis**: The differences between the means of highly rated recipes (5-star) 
+- **Null Hypothesis**: The differences between the means of highly rated recipes (5 stars) 
 and the difference between the means of the low rated recipes (1-4 stars) is Zero
-- **Alternative Hypothesis**: The differences between the means of of highly rated recipes (5-star) 
+- **Alternative Hypothesis**: The differences between the means of of highly rated recipes (5 stars) 
 and the difference between the means of the low rated recipes (1-4 stars) is *not* Zero
 <iframe
   src="assets/permutation-sugar-graph.html"
@@ -170,11 +125,17 @@ and the difference between the means of the low rated recipes (1-4 stars) is *no
   height="600"
   frameborder="0"
 ></iframe>
+```
+'p value: 0.004, Therefore reject Null Hypothesis'
+```
+With an alpha value of 0.01, we reject the null hypothesis and therefore we support
+the alternative hypothesis and find support that the sugar does play a role
+in if a recipe is rated 5 stars or not.
 
 ## Framing a Prediction Problem
 The remained of this report will focus on creating a couple models in order to 
 predict the ratings of the recipes. This will be done using a handful of different 
-features including: sugar content, protein content, 
+features including: sugar content, protein content,       
 
 When first making a Model I when with a Regression, however after working on that
 when deciding how to improve it I switched to a Classifier question determining 
@@ -206,7 +167,7 @@ Our coefficients are incredibly small, hence why the predicted ratings are minim
 changed by each feature.
 
 Additionally, the intercept is the same as the mean! Which means that essentially,
-this linear regression model is a contant model with a tiny bit of varition and 
+this linear regression model is a contant model with a tiny bit of variation and 
 breaks if you give it huge numbers, as the predicted values would then not be
 within the expected 1 to 5 range expected when rating a recipe.
 
