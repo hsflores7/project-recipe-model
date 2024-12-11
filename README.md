@@ -108,10 +108,25 @@ Pivot Table by the rating and the mean and median sugar content.
 
 ## Assessment of Missingness
 ### NMAR Analysis
-
+Yes the column Rating has a bit of NA values of which could be cause by people
+choosing to not leave a rating value on their review as they could prefer for 
+their review to speak for itself rather than attach a number value to it.
 
 ### Missingness Dependency
-
+<iframe
+  src="assets/missing-rating-sugar-graph.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+Based on the permutation test the distribution of Sugar is different when rating is missing.
+The only one I found that was not affected was the number of minutes.
+<iframe
+  src="assets/permutation-missing-sugar-graph.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 ## Hypothesis Testing
 **Question**: Does sugar play a role in a recipe being highly rated?
@@ -135,7 +150,8 @@ in if a recipe is rated 5 stars or not.
 ## Framing a Prediction Problem
 The remained of this report will focus on creating a couple models in order to 
 predict the ratings of the recipes. This will be done using a handful of different 
-features including: sugar content, protein content,       
+features including: sugar content, protein content, sodium content, and the 
+recipe description.
 
 When first making a Model I when with a Regression, however after working on that
 when deciding how to improve it I switched to a Classifier question determining 
@@ -171,6 +187,45 @@ this linear regression model is a contant model with a tiny bit of variation and
 breaks if you give it huge numbers, as the predicted values would then not be
 within the expected 1 to 5 range expected when rating a recipe.
 
+**Scores**: Nearly 0
+
+As stated before this model is basically a constant model and for this large and
+complex of a dataset that doesn't bode very well. Hence the change to a classifier 
+for the final step.
+
 ## Final Model
+For the final model I will choose the following features:
+- Sugar
+- Protein
+- Sodium
+- Description
+
+These features were chosen to add the wides range of diverse features. I wanted
+to avoid using features like carbohydrates or calories because those are quite
+correlated with sugar and protein. Sodium could be semi-correlated but I felt it
+add the best option that could help with the overall accuracy. Same with Description
+it's text versus being a number and could provide a different angle when it comes
+to predicting the rating.
+
+**Score**: 0.7275691699604743
+
+Much better than my Baseline Model! Probably could be improved further with
+more exploration.
 
 ## Fairness Analysis
+**Question**: Does does high sugar content (40+ grams) lead to an unfair rating?
+- **Null Hypothesis**: The differences between the means of high sugar
+and lower sugar prediction are roughly the same.
+- **Alternative Hypothesis**:The differences between the means of high sugar
+and lower sugar prediction are not roughly the same.
+<iframe
+  src="assets/permutation-avg_rating-graph.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+```
+p value: 0.028, Therefore support Null Hypothesis
+```
+With an alpha level of 0.01; we support the null and therefore we 
+have evidence it for fairness.
